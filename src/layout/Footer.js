@@ -13,3 +13,5 @@ const Footer = ()=>{
 
 };
 export default Footer;
+
+//객체를 리엑트에서는 컴퍼넌트라 부른다
