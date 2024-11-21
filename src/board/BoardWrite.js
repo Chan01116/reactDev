@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
 const BoardWrite = ()=>{
     const navigate = useNavigate();
-    const [board,setBoard] = useState(
+    const [board,setBoard] =useState(
         {subject : '',
             contents : '',
             writer : '',
-            midx : '',
+            midx : '1002',
             }
     );
     const{subject,contents,writer,midx} = board;
+
+    const onChange = (event) =>{
+        const{value,name} = event.target;//event.target에서 name과 value만 가져오기
+        setBoard({
+            ...board,
+            [name]:value,
+        });
+    };
+
     const saveBoard = async()=>{
         await axios.post("//localhost/board/boardWriteActionReact.aws",board).then(
             (res) =>{
@@ -23,17 +32,17 @@ const BoardWrite = ()=>{
         <div>
         <div>
             <span>제목</span>
-            <input type='text' name="subject"/>
+            <input type='text' name="subject" value={subject} onChange={onChange}/>
         </div>
         <br/>
         <div>
             <span>내용</span>
-            <textarea name="contents" cols="50" rows="10"/>
+            <textarea name="contents" cols="50" rows="10" value={contents} onChange={onChange}/>
         </div>
         <br/>
         <div>
             <span>작성자</span>
-            <input type='text' name="writer"/>
+            <input type='text' name="writer" value={writer} onChange={onChange}/>
         </div>
         <br/>
         <input type="hidden" name="midx" value="1002"/>
